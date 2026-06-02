@@ -40,3 +40,18 @@ button {
     list-style: none;
     padding: 0;
 }
+.task-list li {
+    background: #eee;
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+}
