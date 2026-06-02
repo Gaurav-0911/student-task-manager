@@ -1,6 +1,6 @@
-const input = document.querySelector("input");
-const button = document.querySelector("button");
-const taskList = document.querySelector(".task-list");
+const input = document.getElementById("taskInput");
+const button = document.getElementById("addTaskBtn");
+const taskList = document.getElementById("taskList");
 
 button.addEventListener("click", () => {
     const taskText = input.value.trim();
@@ -13,7 +13,7 @@ button.addEventListener("click", () => {
     const li = document.createElement("li");
 
     li.innerHTML = `
-        ${taskText}
+        <span>${taskText}</span>
         <button class="delete-btn">Delete</button>
     `;
 
