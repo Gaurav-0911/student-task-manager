@@ -1,11 +1,3 @@
-// =========================
-// Gemini API Configuration
-// =========================
-
-// Paste your Gemini API key here
-const GEMINI_API_KEY =
-prompt("Enter Gemini API Key");
-// =========================
 // DOM Elements
 // =========================
 const taskInput = document.getElementById("taskInput");
