@@ -1,29 +1,33 @@
 // =========================
-// Select DOM Elements
+// Gemini API Configuration
 // =========================
-const taskInput =
-    document.getElementById("taskInput");
 
-const dueDateInput =
-    document.getElementById("dueDate");
+// Paste your Gemini API key here
+const GEMINI_API_KEY =
+prompt("Enter Gemini API Key");
+// =========================
+// DOM Elements
+// =========================
+const taskInput = document.getElementById("taskInput");
+const dueDateInput = document.getElementById("dueDate");
+const priorityInput = document.getElementById("priority");
+const addTaskBtn = document.getElementById("addTaskBtn");
+const taskList = document.getElementById("taskList");
 
-const priorityInput =
-    document.getElementById("priority");
+const searchTask = document.getElementById("searchTask");
 
-const addTaskBtn =
-    document.getElementById("addTaskBtn");
+const clearAllBtn =document.getElementById("clearAllBtn");
 
-const taskList =
-    document.getElementById("taskList");
+const darkModeBtn =document.getElementById("darkModeBtn");
 
-const searchTask =
-    document.getElementById("searchTask");
+const aiSuggestBtn =
+    document.getElementById("aiSuggestBtn");
 
-const clearAllBtn =
-    document.getElementById("clearAllBtn");
+const aiTipsBtn =
+    document.getElementById("aiTipsBtn");
 
-const darkModeBtn =
-    document.getElementById("darkModeBtn");
+const aiResponse =
+    document.getElementById("aiResponse");
 
 const filterButtons =
     document.querySelectorAll(".filter-btn");
@@ -47,11 +51,12 @@ const progressText =
 
 
 // =========================
-// Load Data on Page Load
+// Load Data
 // =========================
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+
         loadTasks();
         loadTheme();
         updateCounter();
@@ -80,7 +85,35 @@ taskInput.addEventListener(
 
 
 // =========================
-// Add Task Function
+// Smart AI Priority
+// =========================
+function smartPriority(task) {
+
+    const text =
+        task.toLowerCase();
+
+    if (
+        text.includes("exam") ||
+        text.includes("urgent") ||
+        text.includes("assignment") ||
+        text.includes("deadline")
+    ) {
+        return "High";
+    }
+
+    else if (
+        text.includes("study") ||
+        text.includes("practice")
+    ) {
+        return "Medium";
+    }
+
+    return "Low";
+}
+
+
+// =========================
+// Add Task
 // =========================
 function addTask() {
 
@@ -90,15 +123,19 @@ function addTask() {
     const dueDate =
         dueDateInput.value;
 
-    const priority =
+    let priority =
         priorityInput.value;
 
     if (taskText === "") {
 
-        alert("Please enter a task.");
+        alert("Please enter task");
 
         return;
     }
+
+    // AI Smart Priority
+    priority =
+        smartPriority(taskText);
 
     createTask(
         taskText,
@@ -111,15 +148,17 @@ function addTask() {
 
     taskInput.value = "";
     dueDateInput.value = "";
-    priorityInput.value = "Low";
 
     updateCounter();
     updateProgress();
+    checkEmptyState();
+    // Success Message
+showToast("✅ Task Added Successfully");
+ 
 }
 
-
 // =========================
-// Create Task Function
+// Create Task
 // =========================
 function createTask(
     taskText,
@@ -137,21 +176,23 @@ function createTask(
     
     <div class="task-info">
 
-        <div class="task-text 
+        <div class="task-text
         ${completed ? "completed" : ""}">
         
-        ${taskText}
-        
+            ${taskText}
+
         </div>
 
         <div class="task-details">
-        
+
             📅 Due:
             ${dueDate || "No Date"}
+
             |
+
             🔥 Priority:
             ${priority}
-            
+
         </div>
 
     </div>
@@ -176,14 +217,14 @@ function createTask(
     taskList.appendChild(li);
 
 
-    // =====================
     // Complete Task
-    // =====================
     li.querySelector(".complete-btn")
         .addEventListener("click",
             () => {
 
-                li.querySelector(".task-text")
+                li.querySelector(
+                    ".task-text"
+                )
                     .classList.toggle(
                         "completed"
                     );
@@ -194,9 +235,7 @@ function createTask(
             });
 
 
-    // =====================
     // Edit Task
-    // =====================
     li.querySelector(".edit-btn")
         .addEventListener("click",
             () => {
@@ -208,35 +247,33 @@ function createTask(
 
                 const updatedTask =
                     prompt(
-                        "Edit task:",
+                        "Edit Task",
                         task.innerText
                     );
 
                 if (
-                    updatedTask !== null
-                    &&
+                    updatedTask &&
                     updatedTask.trim()
-                    !== ""
                 ) {
 
                     task.innerText =
-                        updatedTask.trim();
+                        updatedTask;
 
                     saveTasks();
                 }
             });
 
 
-    // =====================
     // Delete Task
-    // =====================
     li.querySelector(".delete-btn")
         .addEventListener("click",
             () => {
 
                 li.remove();
+                checkEmptyState();
 
                 saveTasks();
+
                 updateCounter();
                 updateProgress();
             });
@@ -244,7 +281,7 @@ function createTask(
 
 
 // =========================
-// Save Tasks to Local Storage
+// Save Tasks
 // =========================
 function saveTasks() {
 
@@ -252,29 +289,30 @@ function saveTasks() {
 
     document.querySelectorAll(
         ".task-item"
-    ).forEach(task => {
+    )
+        .forEach(task => {
 
-        tasks.push({
+            tasks.push({
 
-            text:
-                task.querySelector(
-                    ".task-text"
-                ).innerText,
+                text:
+                    task.querySelector(
+                        ".task-text"
+                    ).innerText,
 
-            dueDate:
-                task.querySelector(
-                    ".task-details"
-                ).innerText,
+                details:
+                    task.querySelector(
+                        ".task-details"
+                    ).innerText,
 
-            completed:
-                task.querySelector(
-                    ".task-text"
-                )
-                    .classList.contains(
-                        "completed"
+                completed:
+                    task.querySelector(
+                        ".task-text"
                     )
+                        .classList.contains(
+                            "completed"
+                        )
+            });
         });
-    });
 
     localStorage.setItem(
         "tasks",
@@ -302,13 +340,15 @@ function loadTasks() {
             "",
             "Low",
             task.completed
+            
         );
     });
 }
+checkEmptyState();
 
 
 // =========================
-// Update Counter
+// Counter
 // =========================
 function updateCounter() {
 
@@ -335,7 +375,7 @@ function updateCounter() {
 
 
 // =========================
-// Progress Bar
+// Progress
 // =========================
 function updateProgress() {
 
@@ -420,10 +460,7 @@ filterButtons.forEach(button => {
                                 : "none";
                     }
 
-                    else if (
-                        filter ===
-                        "pending"
-                    ) {
+                    else {
 
                         task.style.display =
                             !completed
@@ -436,7 +473,7 @@ filterButtons.forEach(button => {
 
 
 // =========================
-// Search Task
+// Search
 // =========================
 searchTask.addEventListener(
     "input",
@@ -463,9 +500,218 @@ searchTask.addEventListener(
             });
     });
 
+// REAL GEMINI AI SUGGESTION
+// =========================
+// =========================
+// REAL GEMINI AI SUGGESTION
+// =========================
+// =========================
+// PROFESSIONAL AI SUGGESTION
+// =========================
+aiSuggestBtn.addEventListener(
+    "click",
+    async () => {
+
+        const task =
+            taskInput.value.trim();
+
+        if (!task) {
+
+            aiResponse.innerHTML =
+                "Please enter a task first.";
+
+            return;
+        }
+
+        aiResponse.innerHTML =
+            "🤖 Thinking...";
+
+        try {
+
+            const response =
+                await fetch(
+
+`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            contents: [
+                                {
+                                    parts: [
+                                        {
+                                            text:
+`You are an AI Student Assistant.
+
+Task: ${task}
+
+Give:
+1. Exactly 3 short subtasks
+2. One short study tip
+
+Format:
+Subtask 1:
+Subtask 2:
+Subtask 3:
+Study Tip:
+`
+                                        }
+                                    ]
+                                }
+                            ]
+                        })
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            const result =
+                data?.candidates?.[0]
+                    ?.content?.parts?.[0]
+                    ?.text;
+
+            if (!result) {
+
+                aiResponse.innerHTML =
+                    "No suggestion found.";
+
+                return;
+            }
+
+            // Format Result Beautifully
+            aiResponse.innerHTML = `
+
+            <div class="ai-result-card">
+
+                <div class="ai-title">
+                    🤖 AI Study Plan
+                </div>
+
+                <p>
+                    ${result.replace(/\n/g, "<br>")}
+                </p>
+
+                <br>
+
+                <button id="addAiTaskBtn"
+                style="
+                    background:#4facfe;
+                    color:white;
+                    border:none;
+                    padding:10px 15px;
+                    border-radius:8px;
+                    cursor:pointer;
+                ">
+
+                ➕ Add Main Task
+
+                </button>
+
+            </div>
+            `;
+
+
+            // Auto Add Main Task
+            document
+                .getElementById(
+                    "addAiTaskBtn"
+                )
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        addTaskBtn.click();
+                    }
+                );
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            aiResponse.innerHTML =
+                "Gemini API Error.";
+        }
+    });
+
 
 // =========================
-// Clear All Tasks
+// REAL PRODUCTIVITY TIP
+// =========================
+// =========================
+// GEMINI PRODUCTIVITY TIP
+// =========================
+aiTipsBtn.addEventListener(
+    "click",
+    async () => {
+
+        aiResponse.innerText =
+            "🤖 Generating tip...";
+
+        try {
+
+            const response =
+                await fetch(
+
+`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            contents: [
+                                {
+                                    parts: [
+                                        {
+                                            text:
+"Give one useful productivity tip for an MCA student in simple English."
+                                        }
+                                    ]
+                                }
+                            ]
+                        })
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            const result =
+                data?.candidates?.[0]
+                    ?.content?.parts?.[0]
+                    ?.text;
+
+            aiResponse.innerText =
+                result ||
+                "No tip found.";
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            aiResponse.innerText =
+                "Gemini API Error.";
+        }
+    });
+// =========================
+// Clear All
 // =========================
 clearAllBtn.addEventListener(
     "click",
@@ -483,6 +729,7 @@ clearAllBtn.addEventListener(
 
             updateCounter();
             updateProgress();
+            checkEmptyState();
         }
     });
 
@@ -528,5 +775,117 @@ function loadTheme() {
             .classList.add(
                 "dark-mode"
             );
+    }
+}
+
+// =========================
+// TOAST NOTIFICATION
+// =========================
+function showToast(message) {
+
+    const toast =
+        document.createElement(
+            "div"
+        );
+
+    toast.innerText =
+        message;
+
+    toast.style.position =
+        "fixed";
+
+    toast.style.bottom =
+        "20px";
+
+    toast.style.right =
+        "20px";
+
+    toast.style.background =
+        "#28a745";
+
+    toast.style.color =
+        "white";
+
+    toast.style.padding =
+        "14px 22px";
+
+    toast.style.borderRadius =
+        "10px";
+
+    toast.style.fontWeight =
+        "600";
+
+    toast.style.boxShadow =
+        "0 5px 15px rgba(0,0,0,0.2)";
+
+    toast.style.zIndex =
+        "9999";
+
+    document.body
+        .appendChild(
+            toast
+        );
+
+    setTimeout(() => {
+
+        toast.remove();
+
+    }, 2500);
+}
+
+
+// =========================
+// EMPTY TASK MESSAGE
+// =========================
+function checkEmptyState() {
+
+    const tasks =
+        document.querySelectorAll(
+            ".task-item"
+        );
+
+    let emptyMessage =
+        document.getElementById(
+            "emptyMessage"
+        );
+
+    if (
+        tasks.length === 0
+    ) {
+
+        if (!emptyMessage) {
+
+            emptyMessage =
+                document.createElement(
+                    "p"
+                );
+
+            emptyMessage.id =
+                "emptyMessage";
+
+            emptyMessage.innerText =
+                "📌 No tasks available. Add your first task.";
+
+            emptyMessage.style.textAlign =
+                "center";
+
+            emptyMessage.style.marginTop =
+                "20px";
+
+            emptyMessage.style.color =
+                "gray";
+
+            taskList.appendChild(
+                emptyMessage
+            );
+        }
+    }
+
+    else {
+
+        if (emptyMessage) {
+
+            emptyMessage.remove();
+        }
     }
 }

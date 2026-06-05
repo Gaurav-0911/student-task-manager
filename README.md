@@ -1,4 +1,4 @@
-# 📚 Student Task Manager
+# 🤖 AI Student Task Manager
 
 A modern and responsive **Student Task Manager Web Application** built using **HTML, CSS, and JavaScript**.
 
@@ -18,6 +18,10 @@ This project helps students manage their daily tasks efficiently with features l
 ✅ Local Storage (Tasks remain saved after refresh)  
 ✅ Responsive Design (Mobile + Desktop)  
 ✅ Enter Key Support
+✅ Gemini AI Integration  
+✅ AI Task Suggestions  
+✅ AI Productivity Tips  
+✅ Smart Task Planning
 
 ---
 

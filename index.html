@@ -6,9 +6,9 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>Student Task Manager</title>
+    <title>AI Student Task Manager</title>
 
-    <!-- CSS File -->
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
     <!-- Google Font -->
@@ -24,10 +24,9 @@
         <div class="header">
 
             <h1>
-                📚 Student Task Manager
+                🤖 AI Student Task Manager
             </h1>
 
-            <!-- Dark Mode -->
             <button id="darkModeBtn"
                 class="dark-mode-btn">
 
@@ -48,19 +47,17 @@
         </div>
 
 
-        <!-- Task Input Section -->
+        <!-- Task Input -->
         <div class="task-input-section">
 
             <!-- Task Name -->
             <input type="text"
                 id="taskInput"
-                placeholder="Enter your task here...">
-
+                placeholder="Enter your task...">
 
             <!-- Due Date -->
             <input type="date"
                 id="dueDate">
-
 
             <!-- Priority -->
             <select id="priority">
@@ -79,16 +76,51 @@
 
             </select>
 
-
-            <!-- Add Button -->
+            <!-- Add Task -->
             <button id="addTaskBtn">
+
                 Add Task
+
             </button>
 
         </div>
 
 
-        <!-- Progress Section -->
+        <!-- AI Features -->
+        <div class="ai-section">
+
+            <button id="aiSuggestBtn">
+
+                ✨ AI Suggest Task
+
+            </button>
+
+            <button id="aiTipsBtn">
+
+                🤖 Productivity Tip
+
+            </button>
+
+        </div>
+
+
+        <!-- AI Result Box -->
+        <div class="ai-box">
+
+            <h3>
+                AI Assistant
+            </h3>
+
+            <p id="aiResponse">
+
+                AI suggestions will appear here...
+
+            </p>
+
+        </div>
+
+
+        <!-- Progress -->
         <div class="progress-section">
 
             <p>
@@ -109,7 +141,7 @@
         </div>
 
 
-        <!-- Task Counter -->
+        <!-- Counter -->
         <div class="task-counter">
 
             <span>
@@ -136,7 +168,7 @@
         </div>
 
 
-        <!-- Filter Buttons -->
+        <!-- Filter -->
         <div class="filter-buttons">
 
             <button class="filter-btn active"
@@ -164,15 +196,11 @@
 
 
         <!-- Clear All -->
-        <div class="clear-all-section">
+        <button id="clearAllBtn">
 
-            <button id="clearAllBtn">
+            🗑 Clear All Tasks
 
-                🗑 Clear All Tasks
-
-            </button>
-
-        </div>
+        </button>
 
 
         <!-- Task List -->
@@ -184,7 +212,7 @@
     </div>
 
 
-    <!-- JS File -->
+    <!-- JS -->
     <script src="script.js"></script>
 
 </body>
