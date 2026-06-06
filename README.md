@@ -35,13 +35,13 @@ This application helps students efficiently manage daily tasks, receive AI-power
 ## 📸 Screenshots
 
 ### Home Page
-![Home](screenshots/home.png)
+![Home](screenshots/Home.jpg)
 
 ### Dark Mode
-![Dark Mode](screenshots/darkmode.png)
+![Dark Mode](screenshots/DarkMode.jpg)
 
 ### AI Suggestion Feature
-![AI Feature](screenshots/ai-feature.png)
+![AI Feature](screenshots/ai-feature.jpg)
 
 ## 🛠️ Tech Stack
 
