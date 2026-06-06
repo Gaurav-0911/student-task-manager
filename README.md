@@ -32,6 +32,16 @@ This application helps students efficiently manage daily tasks, receive AI-power
 ✅ AI-Based Task Planning
 
 ---
+## 📸 Screenshots
+
+### Home Page
+![Home](screenshots/home.png)
+
+### Dark Mode
+![Dark Mode](screenshots/darkmode.png)
+
+### AI Suggestion Feature
+![AI Feature](screenshots/ai-feature.png)
 
 ## 🛠️ Tech Stack
 
